@@ -1,4 +1,4 @@
-import { List, Button } from 'antd';
+import { List } from 'antd';
 
 
 const FriendName = ({ names }) => {

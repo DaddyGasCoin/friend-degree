@@ -1,22 +1,37 @@
 import { List, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import FriendName from './FriendNames';
-import { useState } from 'react';
+import GetNames from './NamesInput';
+import { useMemo, useState } from 'react';
+import { ValueContext } from '../../ValueContext';
+import bfs from '../../utils/FindDegree';
 
 const ListNames = () => {
 
     const relationships = {
-        John: ['Jane', 'Bob', 'Alice'],
-        Jane: ['Bob', 'Alice'],
-        Bob: ['Alice'],
-        Alice: []
+        Alice: ["Bob", "Carol"],
+        Bob: ["Alice", "Carol"],
+        Carol: ["Alice", "Bob", "Dave"],
+        Dave: ["Carol"],
     }
+
     const [names, setNames] = useState(relationships)
     const [currentName, setCurrentName] = useState()
+    const [target, setTarget] = useState({
+        start: null,
+        end: null
+    })
 
-    const addName = () => {
-
+    const findDegree = () => {
+        // console.log(target)
+        console.log(bfs(relationships, target.start, target.end))
     }
+    const value = useMemo(() => {
+        return {
+            target,
+            setTarget,
+        }
+    }, [target]);
     return (
         <div>
             <List
@@ -39,11 +54,14 @@ const ListNames = () => {
                     </div>
                 </List.Item>} />
 
-            <Button onClick={() => addName()}>Add Name</Button>
+            <Button onClick={() => findDegree()}>Check Degree</Button>
 
             {currentName ?
                 <FriendName names={names[currentName]} /> :
                 null}
+            <ValueContext.Provider value={value}>
+                <GetNames names={Object.keys(names)} />
+            </ValueContext.Provider>
 
         </div>
 

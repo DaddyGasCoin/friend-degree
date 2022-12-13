@@ -4,6 +4,7 @@ import FriendName from './FriendNames';
 import GetNames from './NamesInput';
 import { useMemo, useState } from 'react';
 import { ValueContext } from '../../ValueContext';
+import AddName from './AddName';
 import bfs from '../../utils/FindDegree';
 
 const ListNames = () => {
@@ -32,8 +33,16 @@ const ListNames = () => {
             setTarget,
         }
     }, [target]);
+
+    const addName = (name) => {
+        setNames({
+            ...names,
+            [name.name]: []
+        })
+    }
     return (
         <div>
+
             <List
                 style={{
                     width: 300, maxHeight: 250,
@@ -55,6 +64,7 @@ const ListNames = () => {
                 </List.Item>} />
 
             <Button onClick={() => findDegree()}>Check Degree</Button>
+            <AddName handler={addName} />
 
             {currentName ?
                 <FriendName names={names[currentName]} /> :

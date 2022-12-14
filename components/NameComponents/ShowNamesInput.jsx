@@ -3,6 +3,9 @@ import { Select } from 'antd';
 import { useContext, useEffect, useState } from 'react';
 import { ValueContext } from '../../ValueContext';
 
+
+//This component if used to get the values used from the two select form 
+// for finding the degree of seperation
 const GetNames = ({ names }) => {
 
     const [listItems, setListItem] = useState([])
@@ -15,7 +18,7 @@ const GetNames = ({ names }) => {
             })
         });
         setListItem(obj)
-    }, [])
+    }, [names])
 
     const values = useContext(ValueContext)
 
@@ -38,6 +41,7 @@ const GetNames = ({ names }) => {
                     width: 120,
                 }}
                 onChange={handleStart}
+                placeholder='Pick a name'
                 options={listItems}
             />
             <Select
@@ -45,6 +49,7 @@ const GetNames = ({ names }) => {
                     width: 120,
                 }}
                 onChange={handleEnd}
+                placeholder='Pick a name'
                 options={listItems}
             />
         </div>

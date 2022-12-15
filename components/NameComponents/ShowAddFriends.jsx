@@ -28,7 +28,7 @@ const AddFriends = ({ names, addFriend, currentName, currentFriends }) => {
         <>
             <Select
                 mode="multiple"
-                placeholder="Please select"
+                placeholder="Select names"
                 onChange={handleChange}
                 style={{
                     width: '100%',

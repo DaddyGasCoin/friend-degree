@@ -1,4 +1,4 @@
-import { List, Button } from 'antd';
+import { List, Button, Tooltip } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import FriendName from './ShowFriends';
 import GetNames from './ShowNamesInput';
@@ -49,12 +49,13 @@ const ListNames = () => {
         if (names[target.start].includes(target.end))
             setDegree([target.start, target.end].join('>>'))
 
-        const degree = bfs(names, target.start, target.end)
-        if (degree)
-            setDegree(degree.join('>>'))
-        else
-            setDegree('No connnection')
-
+        else {
+            const degree = bfs(names, target.start, target.end)
+            if (degree)
+                setDegree(degree.join('>>'))
+            else
+                setDegree('No connnection')
+        }
     }
 
     const value = useMemo(() => {
@@ -109,12 +110,16 @@ const ListNames = () => {
                                     marginRight: '3px', width: '100%'
                                 }}>
                                     {item}
-                                    <Button size='small' shape="circle"
-                                        onClick={(e) => {
-                                            nameFormHandler(item)
-                                            e.stopPropagation();
-                                        }}
-                                        icon={<PlusOutlined />} />
+                                    <Tooltip title="Add friend">
+                                        <Button size='small' shape="circle"
+                                            onClick={(e) => {
+                                                nameFormHandler(item)
+                                                e.stopPropagation();
+                                            }}
+                                            icon={<PlusOutlined />}
+                                        />
+                                    </Tooltip>
+
                                 </div>
                             </List.Item>} />
                     </div>
